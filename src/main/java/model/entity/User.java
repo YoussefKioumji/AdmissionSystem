@@ -17,7 +17,7 @@ public class User {
     private String password;
     private int age;
     private String phone;
-    private List<Subject> subjects = new ArrayList<>();
+    private List<Subject> exams = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -99,11 +99,11 @@ public class User {
         this.phone = phone;
     }
 
-    public List<Subject> getSubjects() {
-        return subjects;
+    public List<Subject> getExams() {
+        return exams;
     }
 
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
+    public void setExams(List<Subject> exams) {
+        this.exams = exams;
     }
 }

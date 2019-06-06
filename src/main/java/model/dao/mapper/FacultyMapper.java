@@ -11,11 +11,11 @@ public class FacultyMapper implements ObjectMapper<Faculty> {
     public Faculty extractFromResultSet(ResultSet resultSet) throws SQLException {
         Faculty faculty = new Faculty();
 
-        faculty.setId(resultSet.getInt("id"));
-        faculty.setEnName(resultSet.getString("name_en"));
-        faculty.setUaName(resultSet.getString("name_ua"));
-        faculty.setEmail(resultSet.getString("email"));
-        faculty.setPhone(resultSet.getString("phone"));
+        faculty.setId(resultSet.getInt("faculty.id"));
+        faculty.setEnName(resultSet.getString("faculty.name_en"));
+        faculty.setUaName(resultSet.getString("faculty.name_ua"));
+        faculty.setEmail(resultSet.getString("faculty.email"));
+        faculty.setPhone(resultSet.getString("faculty.phone"));
 
         return faculty;
     }

@@ -11,12 +11,12 @@ public class SubjectMapper implements ObjectMapper<Subject> {
     public Subject extractFromResultSet(ResultSet resultSet) throws SQLException {
         Subject subject = new Subject();
 
-        subject.setId(resultSet.getInt("id"));
-        subject.setEnName(resultSet.getString("name_en"));
-        subject.setUaName(resultSet.getString("name_ua"));
-        subject.setQuestions(resultSet.getInt("questions"));
-        subject.setMaximum(resultSet.getInt("maximum"));
-        subject.setMinimum(resultSet.getInt("minimum"));
+        subject.setId(resultSet.getInt("subject.id"));
+        subject.setEnName(resultSet.getString("subject.name_en"));
+        subject.setUaName(resultSet.getString("subject.name_ua"));
+        subject.setQuestions(resultSet.getInt("subject.questions"));
+        subject.setMaximum(resultSet.getInt("subject.maximum"));
+        subject.setMinimum(resultSet.getInt("subject.minimum"));
 
         return subject;
     }

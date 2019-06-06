@@ -39,7 +39,7 @@ public class JDBCSubjectFactory implements SubjectDao {
     public List<Subject> findAll() {
         Map<Integer, Subject> subjects = new HashMap<>();
         try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(properties.getProperty("SELECT_SUBJECT_ALL"));
+            ResultSet resultSet = statement.executeQuery(properties.getProperty("SUBJECT_SELECT_ALL"));
             SubjectMapper subjectMapper = new SubjectMapper();
             while(resultSet.next()) {
                 Subject subject = subjectMapper.extractFromResultSet(resultSet);

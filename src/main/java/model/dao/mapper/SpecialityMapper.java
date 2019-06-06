@@ -12,11 +12,11 @@ public class SpecialityMapper implements ObjectMapper<Speciality> {
     public Speciality extractFromResultSet(ResultSet resultSet) throws SQLException {
         Speciality speciality = new Speciality();
 
-        speciality.setId(resultSet.getInt("id"));
-        speciality.setCode(resultSet.getInt("code"));
-        speciality.setEnName(resultSet.getString("name_en"));
-        speciality.setUaName(resultSet.getString("name_ua"));
-        speciality.setYears(resultSet.getInt("years"));
+        speciality.setId(resultSet.getInt("speciality.id"));
+        speciality.setCode(resultSet.getInt("speciality.code"));
+        speciality.setEnName(resultSet.getString("speciality.name_en"));
+        speciality.setUaName(resultSet.getString("speciality.name_ua"));
+        speciality.setYears(resultSet.getInt("speciality.years"));
 
         return speciality;
     }

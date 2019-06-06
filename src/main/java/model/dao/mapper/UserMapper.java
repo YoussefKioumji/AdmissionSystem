@@ -12,16 +12,16 @@ public class UserMapper implements ObjectMapper<User> {
     public User extractFromResultSet(ResultSet resultSet) throws SQLException {
         User user = new User();
 
-        user.setId(resultSet.getInt("id"));
-        user.setRole(Role.valueOf(resultSet.getString("role").toUpperCase()));
-        user.setEnFirstName(resultSet.getString("first_name_en"));
-        user.setUaFirstName(resultSet.getString("first_name_ua"));
-        user.setEnLastName(resultSet.getString("last_name_en"));
-        user.setUaLastName(resultSet.getString("last_name_ua"));
-        user.setEmail(resultSet.getString("email"));
-        user.setPassword(resultSet.getString("password"));
-        user.setAge(resultSet.getInt("age"));
-        user.setPhone(resultSet.getString("phone"));
+        user.setId(resultSet.getInt("user.id"));
+        user.setRole(Role.valueOf(resultSet.getString("user.role").toUpperCase()));
+        user.setEnFirstName(resultSet.getString("user.first_name_en"));
+        user.setUaFirstName(resultSet.getString("user.first_name_ua"));
+        user.setEnLastName(resultSet.getString("user.last_name_en"));
+        user.setUaLastName(resultSet.getString("user.last_name_ua"));
+        user.setEmail(resultSet.getString("user.email"));
+        user.setPassword(resultSet.getString("user.password"));
+        user.setAge(resultSet.getInt("user.age"));
+        user.setPhone(resultSet.getString("user.phone"));
 
         return user;
     }

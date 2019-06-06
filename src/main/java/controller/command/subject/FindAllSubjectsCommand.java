@@ -7,10 +7,10 @@ import model.service.SubjectService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class FindAllSubjectCommand implements Command {
+public class FindAllSubjectsCommand implements Command {
     private SubjectService subjectService;
 
-    public FindAllSubjectCommand(SubjectService subjectService) {
+    public FindAllSubjectsCommand(SubjectService subjectService) {
         this.subjectService = subjectService;
     }
 
