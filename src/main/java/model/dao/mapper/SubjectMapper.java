@@ -17,6 +17,7 @@ public class SubjectMapper implements ObjectMapper<Subject> {
         subject.setQuestions(resultSet.getInt("subject.questions"));
         subject.setMaximum(resultSet.getInt("subject.maximum"));
         subject.setMinimum(resultSet.getInt("subject.minimum"));
+        subject.setMark(resultSet.getInt("subject.mark"));
 
         return subject;
     }

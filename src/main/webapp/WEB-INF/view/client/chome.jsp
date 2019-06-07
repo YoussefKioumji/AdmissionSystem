@@ -7,6 +7,17 @@
         <fmt:message key="client.home_title" var="pageTitle"/>
         <jsp:include page="cheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include>
+        </jsp:include><br>
+        <fmt:message key="client.marks"/><br>
+        <c:forEach items="${results}" var="result">
+            <c:if test="${user.email == result.email}">
+                <c:forEach items="${result.exams}" var="exam">
+                    <c:if test="${exam.mark != 0}">
+                        <c:out value="${exam.enName}"/>
+                        <c:out value="${exam.mark}"/><br>
+                    </c:if>
+                </c:forEach>
+            </c:if>
+        </c:forEach>
     </body>
 </html>

@@ -10,7 +10,7 @@ import java.util.Optional;
 public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public Optional<User> login(String email) {
+    public Optional<User> findByEmail(String email) {
         Optional<User> user;
         UserDao dao = daoFactory.createUserDao();
         user =  dao.findByEmail(email);
@@ -22,8 +22,18 @@ public class UserService {
         dao.create(user);
     }
 
-    public List<User> findAll() {
+    public List<User> findAllExams() {
         UserDao dao = daoFactory.createUserDao();
-        return dao.findAll();
+        return dao.findAllExams();
+    }
+
+    public void chooseExams(int userId, int subjectId) {
+        UserDao dao = daoFactory.createUserDao();
+        dao.chooseExams(userId, subjectId);
+    }
+
+    public void deleteExam(int userId, int subjectId) {
+        UserDao dao = daoFactory.createUserDao();
+        dao.deleteExam(userId, subjectId);
     }
 }

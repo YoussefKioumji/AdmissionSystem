@@ -8,6 +8,9 @@
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
         </jsp:include>
+        <c:forEach items="${subjects}" var="subject">
+            <c:out value="${subject}"/>
+        </c:forEach>
         <table>
             <thead>
                 <tr>
@@ -23,8 +26,10 @@
                             <th><c:out value="${user.email}"/></th>
                             <th><c:out value="${exam.enName}"/></th>
                             <th>
-                                <form action="${pageContext.request.contextPath}/app/examsCheck" method="post">
+                                <form action="${pageContext.request.contextPath}/app/admin/checkExams" method="get">
                                     <input type="number" min="0" max="100" id="mark" name="mark">
+                                    <input type="hidden" name="userEmail" value="${user.email}"/>
+                                    <input type="hidden" name="subjectId" value="${exam.id}"/>
                                     <input type="submit" value="<fmt:message key="administrator.exam_submit"/>"/>
                                 </form>
                             </th>

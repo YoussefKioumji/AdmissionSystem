@@ -8,6 +8,7 @@ public class Subject {
     private int questions;
     private int maximum;
     private int minimum;
+    private int mark;
 
     public int getId() {
         return id;
@@ -55,5 +56,21 @@ public class Subject {
 
     public void setMinimum(int minimum) {
         this.minimum = minimum;
+    }
+
+    public int getMark() {
+        return mark;
+    }
+
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "enName='" + enName + '\'' +
+                ", mark=" + mark +
+                '}';
     }
 }

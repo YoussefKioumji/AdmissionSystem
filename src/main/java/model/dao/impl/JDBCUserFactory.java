@@ -27,8 +27,7 @@ public class JDBCUserFactory implements UserDao {
 
     @Override
     public void create (User user) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(properties.getProperty("USER_INSERT"));
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("USER_INSERT"))){
             statement.setString(1, user.getRole().name().toLowerCase());
             statement.setString(2, user.getEnFirstName());
             statement.setString(3, user.getUaFirstName());
@@ -46,28 +45,86 @@ public class JDBCUserFactory implements UserDao {
 
     @Override
     public User findById(int id) {
+//        User user = new User();
+//        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("USER_FIND_BY_ID"))) {
+//            statement.setInt(1, id);
+//            ResultSet resultSet = statement.executeQuery();
+//            UserMapper userMapper = new UserMapper();
+//            while(resultSet.next()) {
+//                user = userMapper.extractFromResultSet(resultSet);
+//            }
+//            return user;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
         return null;
     }
 
     @Override
     public List<User> findAll() {
+//        Map<Integer, User> users = new HashMap<>();
+//        Map<Integer, Subject> subjects = new HashMap<>();
+//        try (Statement statement = connection.createStatement()){
+//            ResultSet resultSet = statement.executeQuery(properties.getProperty("USER_SELECT_ALL"));
+//            UserMapper userMapper = new UserMapper();
+//            SubjectMapper subjectMapper = new SubjectMapper();
+//            while(resultSet.next()) {
+//                User user = userMapper.extractFromResultSet(resultSet);
+//                user = userMapper.makeUnique(users, user);
+//                Subject subject = subjectMapper.extractFromResultSet(resultSet);
+//                subject = subjectMapper.makeUnique(subjects, subject);
+//                user.getExams().add(subject);
+//            }
+//            return new ArrayList<>(users.values());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+        return null;
+    }
+
+    @Override
+    public List<User> findAllExams() {
         Map<Integer, User> users = new HashMap<>();
         Map<Integer, Subject> subjects = new HashMap<>();
         try (Statement statement = connection.createStatement()){
-            ResultSet resultSet = statement.executeQuery(properties.getProperty("ADMINISTRATOR_SELECT_EXAMS_ALL"));
+            ResultSet resultSet = statement.executeQuery(properties.getProperty("CLIENT_SELECT_ALL"));
             UserMapper userMapper = new UserMapper();
             SubjectMapper subjectMapper = new SubjectMapper();
             while(resultSet.next()) {
                 User user = userMapper.extractFromResultSet(resultSet);
                 user = userMapper.makeUnique(users, user);
                 Subject subject = subjectMapper.extractFromResultSet(resultSet);
-                subject = subjectMapper.makeUnique(subjects, subject);
+                subjectMapper.makeUnique(subjects, subject);
                 user.getExams().add(subject);
             }
             return new ArrayList<>(users.values());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public void chooseExams(int userId, int subjectId) {
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("EXAM_INSERT"))) {
+            statement.setInt(1, userId);
+            statement.setInt(2, subjectId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteExam(int userId, int subjectId) {
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("EXAM_DELETE"))) {
+            statement.setInt(1, userId);
+            statement.setInt(2, subjectId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,5 +154,10 @@ public class JDBCUserFactory implements UserDao {
 
     @Override
     public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

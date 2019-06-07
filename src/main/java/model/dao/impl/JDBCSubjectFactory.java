@@ -6,10 +6,7 @@ import model.entity.Subject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class JDBCSubjectFactory implements SubjectDao {
@@ -32,7 +29,19 @@ public class JDBCSubjectFactory implements SubjectDao {
 
     @Override
     public Subject findById(int id) {
-        return null;
+        Subject subject = new Subject();
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("SUBJECT_FIND_BY_ID"))) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            SubjectMapper subjectMapper = new SubjectMapper();
+            while(resultSet.next()) {
+                subject = subjectMapper.extractFromResultSet(resultSet);
+            }
+            return subject;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -46,7 +55,6 @@ public class JDBCSubjectFactory implements SubjectDao {
                 subjectMapper.makeUnique(subjects, subject);
             }
             return new ArrayList<>(subjects.values());
-
         } catch (SQLException e) {
             e.printStackTrace();
             return  null;
@@ -63,5 +71,10 @@ public class JDBCSubjectFactory implements SubjectDao {
 
     @Override
     public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -23,7 +23,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Optional<User> user = userService.login(email);
+        Optional<User> user = userService.findByEmail(email);
         if (user.isPresent() && password.equals(user.get().getPassword())) {
             if (CommandUtility.checkUserIsLogged(request, user.get().getEmail(), user.get())) {
                 return "/WEB-INF/view/error.jsp";

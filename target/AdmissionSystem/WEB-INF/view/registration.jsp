@@ -25,7 +25,7 @@
             <input type="number" min="18" max="100" id="age" name="age"><br><br>
             <label for="phone"><fmt:message key="registration.phone"/></label><br>
             <input type="text" id="phone" name="phone"><br><br>
-            <input type="submit" value=<fmt:message key="registration.button"/>">
+            <input type="submit" value=<fmt:message key="registration.button"/>>
         </form>
         <c:if test="${not empty errorMessage}">
             <c:out value="${errorMessage}"/>

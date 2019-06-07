@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
@@ -13,8 +12,8 @@
             <c:forEach var="i" begin="0" end="2">
                 <br>
                 <select name="selectedSubjects">
-                    <c:forEach items="${exams}" var="subject">
-                        <option value="${subject.enName}"><c:out value="${subject.enName}"/></option>
+                    <c:forEach items="${subjects}" var="subject">
+                        <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
                     </c:forEach>
                 </select>
             </c:forEach>
@@ -31,7 +30,7 @@
                 </tr>
             </thead>
                 <tbody>
-                <c:forEach items="${exams}" var="subject">
+                <c:forEach items="${subjects}" var="subject">
                     <tr>
                         <th><c:out value="${subject.id}"/></th>
                         <th><c:out value="${subject.enName}"/></th>

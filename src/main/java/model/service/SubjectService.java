@@ -13,4 +13,9 @@ public class SubjectService {
         SubjectDao dao = daoFactory.createSubjectDao();
         return dao.findAll();
     }
+
+    public Subject findById(int id) {
+        SubjectDao dao = daoFactory.createSubjectDao();
+        return dao.findById(id);
+    }
 }

@@ -16,9 +16,8 @@ public class AdminShowExamsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<User> users = userService.findAll();
+        List<User> users = userService.findAllExams();
         request.setAttribute("users", users);
-        System.out.println(users);
         return "/WEB-INF/view/administrator/aexams.jsp";
     }
 }

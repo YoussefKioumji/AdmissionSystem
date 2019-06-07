@@ -1,12 +1,10 @@
 package controller.command;
 
 import model.entity.User;
-import model.entity.enums.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
-import java.util.Optional;
 
 public class CommandUtility {
     static boolean checkUserIsLogged(HttpServletRequest request, String email, User user) {
@@ -19,5 +17,13 @@ public class CommandUtility {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         return false;
+    }
+
+    static void logoutUser(HttpServletRequest request, String email) {
+        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext().getAttribute("loggedUsers");
+        loggedUsers.remove(email);
+        request.getSession().getServletContext().setAttribute("loggedUsers", loggedUsers);
+        HttpSession session = request.getSession();
+        session.setAttribute("user", null);
     }
 }
