@@ -7,7 +7,6 @@ import model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class LoginCommand implements Command {
     private Map<Role, String> pages = new HashMap<>();
@@ -23,12 +22,12 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Optional<User> user = userService.findByEmail(email);
-        if (user.isPresent() && password.equals(user.get().getPassword())) {
-            if (CommandUtility.checkUserIsLogged(request, user.get().getEmail(), user.get())) {
+        User user = userService.findByEmail(email);
+        if (password.equals(user.getPassword())) {
+            if (CommandUtility.checkUserIsLogged(request, user.getEmail(), user)) {
                 return "/WEB-INF/view/error.jsp";
             }
-            return pages.getOrDefault(user.get().getRole(), "/WEB-INF/view/login.jsp");
+            return pages.getOrDefault(user.getRole(), "/WEB-INF/view/login.jsp");
         }
         return "/WEB-INF/view/login.jsp";
     }

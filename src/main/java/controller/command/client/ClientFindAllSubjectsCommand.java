@@ -16,7 +16,7 @@ public class ClientFindAllSubjectsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<Subject> subjects = subjectService.findAllSubjects();
+        List<Subject> subjects = subjectService.findAll();
         request.setAttribute("subjects", subjects);
         return "/WEB-INF/view/client/csubjects.jsp";
     }

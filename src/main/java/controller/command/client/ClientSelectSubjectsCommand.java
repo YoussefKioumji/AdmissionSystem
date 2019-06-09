@@ -6,10 +6,10 @@ import model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ClientSelectedSubjectsCommand implements Command {
+public class ClientSelectSubjectsCommand implements Command {
     private UserService userService;
 
-    public ClientSelectedSubjectsCommand(UserService userService) {
+    public ClientSelectSubjectsCommand(UserService userService) {
         this.userService = userService;
     }
 
@@ -22,7 +22,7 @@ public class ClientSelectedSubjectsCommand implements Command {
             selectedSubjects[i] = Integer.parseInt(subjects[i]);
         }
         for (int i = 0; i < selectedSubjects.length; i++) {
-            userService.chooseExams(userId, selectedSubjects[i]);
+            userService.createExam(userId, selectedSubjects[i]);
         }
         return "redirect:home";
     }

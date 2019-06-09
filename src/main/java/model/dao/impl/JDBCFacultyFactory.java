@@ -6,10 +6,7 @@ import model.entity.Faculty;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.*;
 
 public class JDBCFacultyFactory implements FacultyDao {
@@ -32,25 +29,46 @@ public class JDBCFacultyFactory implements FacultyDao {
 
     @Override
     public Faculty findById(int id) {
-        return  null;
+        Faculty faculty = new Faculty();
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("FACULTY_FIND_BY_ID"))) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            FacultyMapper facultyMapper = new FacultyMapper();
+            while(resultSet.next()) {
+                faculty = facultyMapper.extractFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return faculty;
     }
 
     @Override
     public List<Faculty> findAll() {
-//        Map<Integer, Faculty> faculties = new HashMap<>();
-//        try (Statement statement = connection.createStatement()) {
-//            ResultSet resultSet = statement.executeQuery(properties.getProperty("FACULTY_FIND_ALL"));
-//            FacultyMapper facultyMapper = new FacultyMapper();
-//            while(resultSet.next()) {
-//                Faculty faculty = facultyMapper.extractFromResultSet(resultSet);
-//                facultyMapper.makeUnique(faculties, faculty);
-//            }
-//            return new ArrayList<>(faculties.values());
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-        return null;
+        Map<Integer, Faculty> faculties = new HashMap<>();
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(properties.getProperty("FACULTY_FIND_ALL"));
+            FacultyMapper facultyMapper = new FacultyMapper();
+            while(resultSet.next()) {
+                Faculty faculty = facultyMapper.extractFromResultSet(resultSet);
+                facultyMapper.makeUnique(faculties, faculty);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<>(faculties.values());
     }
 
     @Override

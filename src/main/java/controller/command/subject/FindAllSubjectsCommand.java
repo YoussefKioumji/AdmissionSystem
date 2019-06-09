@@ -16,8 +16,18 @@ public class FindAllSubjectsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<Subject> subjects = subjectService.findAllSubjects();
+        int recordPerPage = 5;
+        int pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+        int startIndex = (pageNumber * recordPerPage) - recordPerPage;
+        int totalNumberOfRecords = subjectService.numberOfRows();
+        int numberOfPages = totalNumberOfRecords / recordPerPage;
+        if (totalNumberOfRecords > numberOfPages * recordPerPage) {
+            numberOfPages = numberOfPages + 1;
+        }
+        List<Subject> subjects = subjectService.findAllPagination(startIndex, recordPerPage);
+        System.out.println(subjects);
         request.setAttribute("subjects", subjects);
+        request.setAttribute("numberOfPages", numberOfPages);
         return "/WEB-INF/view/subjects.jsp";
     }
 }

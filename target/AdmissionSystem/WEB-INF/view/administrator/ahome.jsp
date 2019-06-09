@@ -7,6 +7,14 @@
         <fmt:message key="administrator.home_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include>
+        </jsp:include><br>
+        <c:if test="${empty passed}">
+            <form action="${pageContext.request.contextPath}/app/admin/stopAdmission" method="post">
+                <input type="submit" value="<fmt:message key="administrator.stop_admission"/>"/>
+            </form>
+        </c:if>
+        <c:if test="${not empty passed}">
+            <fmt:message key="message.stop_adminssion"/>
+        </c:if><br>
     </body>
 </html>

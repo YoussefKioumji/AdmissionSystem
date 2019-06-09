@@ -18,10 +18,10 @@
     <url-pattern>/app/*</url-pattern>
   </servlet-mapping>
   
-  <!--<filter>-->
-    <!--<filter-name>EncodingFilter</filter-name>-->
-    <!--<filter-class>controller.filters.EncodingFilter</filter-class>-->
-  <!--</filter>-->
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>controller.filters.EncodingFilter</filter-class>
+  </filter>
 
   <!--<filter>-->
     <!--<filter-name>LoginValidationFilter</filter-name>-->
@@ -33,10 +33,10 @@
     <!--<filter-class>controller.filters.RegistrationValidationFilter</filter-class>-->
   <!--</filter>-->
 
-  <!--<filter-mapping>-->
-    <!--<filter-name>EncodingFilter</filter-name>-->
-    <!--<url-pattern>/app/*</url-pattern>-->
-  <!--</filter-mapping>-->
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/app/*</url-pattern>
+  </filter-mapping>
 
   <!--<filter-mapping>-->
     <!--<filter-name>LoginValidationFilter</filter-name>-->

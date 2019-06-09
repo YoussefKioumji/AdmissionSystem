@@ -7,7 +7,16 @@
         <fmt:message key="specialities.title" var="pageTitle"/>
         <jsp:include page="header.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include>
+        </jsp:include><br>
+        <fmt:message key="specialities.search_by_faculty"/>
+        <form action="${pageContext.request.contextPath}/app/searchByFaculty" method="post">
+            <select name="searchedFaculty">
+                <c:forEach items="${faculties}" var="faculty">
+                    <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
+                </c:forEach>
+            </select>
+            <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
+        </form>
         <table>
             <thead>
                 <tr>
@@ -16,6 +25,9 @@
                     <th><fmt:message key="specialities.name"/></th>
                     <th><fmt:message key="specialities.faculty_name"/></th>
                     <th><fmt:message key="specialities.years"/></th>
+                    <c:forEach begin="0" end="2">
+                        <th><fmt:message key="specialities.subject_name"/></th>
+                    </c:forEach>
                 </tr>
             </thead>
             <tbody>
@@ -26,9 +38,15 @@
                         <th><c:out value="${speciality.enName}"/></th>
                         <th><c:out value="${speciality.faculty.enName}"/></th>
                         <th><c:out value="${speciality.years}"/></th>
+                        <c:forEach items="${speciality.subjects}" var="subject">
+                            <th><c:out value="${subject.enName}"/></th>
+                        </c:forEach>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+        <c:forEach begin="1" end="${numberOfPages}" varStatus="loop">
+            <a href="${pageContext.request.contextPath}/app/specialities?pageNumber=${loop.index}">${loop.index}</a>
+        </c:forEach>
     </body>
 </html>

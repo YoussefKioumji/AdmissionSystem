@@ -5,15 +5,13 @@ import model.dao.UserDao;
 import model.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public Optional<User> findByEmail(String email) {
-        Optional<User> user;
+    public User findByEmail(String email) {
         UserDao dao = daoFactory.createUserDao();
-        user =  dao.findByEmail(email);
+        User user =  dao.findByEmail(email);
         return user;
     }
 
@@ -27,13 +25,18 @@ public class UserService {
         return dao.findAllExams();
     }
 
-    public void chooseExams(int userId, int subjectId) {
+    public List<User> findExamsBySubject(int subjectId) {
         UserDao dao = daoFactory.createUserDao();
-        dao.chooseExams(userId, subjectId);
+        return dao.findExamsBySubject(subjectId);
     }
 
-    public void deleteExam(int userId, int subjectId) {
+    public void createExam(int userId, int subjectId) {
         UserDao dao = daoFactory.createUserDao();
-        dao.deleteExam(userId, subjectId);
+        dao.createExam(userId, subjectId);
+    }
+
+    public void updateExam(int mark, int userId, int subjectId) {
+        UserDao dao = daoFactory.createUserDao();
+        dao.updateExam(mark, userId, subjectId);
     }
 }

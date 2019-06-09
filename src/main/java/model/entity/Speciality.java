@@ -12,6 +12,7 @@ public class Speciality {
     private Faculty faculty;
     private int years;
     private List<Subject> subjects = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -67,5 +68,22 @@ public class Speciality {
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Speciality{" +
+                "enName='" + enName + '\'' +
+                ", faculty=" + faculty +
+                ", subjects=" + subjects +
+                '}';
     }
 }

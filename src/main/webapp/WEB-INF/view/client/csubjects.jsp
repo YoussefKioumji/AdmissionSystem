@@ -8,25 +8,30 @@
         <jsp:include page="cheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
         </jsp:include><br>
-        <form action="${pageContext.request.contextPath}/app/client/selectSubjects" method="post">
-            <c:forEach var="i" begin="0" end="2">
-                <br>
-                <select name="selectedSubjects">
-                    <c:forEach items="${subjects}" var="subject">
-                        <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
-                    </c:forEach>
-                </select>
-            </c:forEach>
-            <br><input type="submit" value="Submit">
-        </form>
+        <c:if test="${empty passed}">
+            <form action="${pageContext.request.contextPath}/app/client/selectSubjects" method="post">
+                <c:forEach var="i" begin="0" end="2">
+                    <br>
+                    <select name="selectedSubjects">
+                        <c:forEach items="${subjects}" var="subject">
+                            <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
+                        </c:forEach>
+                    </select>
+                </c:forEach>
+                <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
+            </form>
+        </c:if>
+        <c:if test="${not empty passed}">
+            <fmt:message key="message.stop_adminssion"/>
+        </c:if>
         <table>
             <thead>
                 <tr>
-                    <th><fmt:message key="exams.id"/></th>
-                    <th><fmt:message key="exams.name"/></th>
-                    <th><fmt:message key="exams.questions"/></th>
-                    <th><fmt:message key="exams.maximum"/></th>
-                    <th><fmt:message key="exams.minimum"/></th>
+                    <th><fmt:message key="subject.id"/></th>
+                    <th><fmt:message key="subject.name"/></th>
+                    <th><fmt:message key="subject.questions"/></th>
+                    <th><fmt:message key="subject.maximum"/></th>
+                    <th><fmt:message key="subject.minimum"/></th>
                 </tr>
             </thead>
                 <tbody>

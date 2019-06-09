@@ -1,7 +1,7 @@
 package model.dao.impl;
 
 import model.dao.UserDao;
-import model.dao.mapper.SubjectMapper;
+import model.dao.mapper.SubjectMarkMapper;
 import model.dao.mapper.UserMapper;
 import model.entity.Subject;
 import model.entity.User;
@@ -40,6 +40,12 @@ public class JDBCUserFactory implements UserDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -68,7 +74,7 @@ public class JDBCUserFactory implements UserDao {
 //        try (Statement statement = connection.createStatement()){
 //            ResultSet resultSet = statement.executeQuery(properties.getProperty("USER_SELECT_ALL"));
 //            UserMapper userMapper = new UserMapper();
-//            SubjectMapper subjectMapper = new SubjectMapper();
+//            SubjectMarkMapper subjectMapper = new SubjectMarkMapper();
 //            while(resultSet.next()) {
 //                User user = userMapper.extractFromResultSet(resultSet);
 //                user = userMapper.makeUnique(users, user);
@@ -91,40 +97,87 @@ public class JDBCUserFactory implements UserDao {
         try (Statement statement = connection.createStatement()){
             ResultSet resultSet = statement.executeQuery(properties.getProperty("CLIENT_SELECT_ALL"));
             UserMapper userMapper = new UserMapper();
-            SubjectMapper subjectMapper = new SubjectMapper();
+            SubjectMarkMapper subjectMarkMapper = new SubjectMarkMapper();
             while(resultSet.next()) {
                 User user = userMapper.extractFromResultSet(resultSet);
                 user = userMapper.makeUnique(users, user);
-                Subject subject = subjectMapper.extractFromResultSet(resultSet);
-                subjectMapper.makeUnique(subjects, subject);
+                Subject subject = subjectMarkMapper.extractFromResultSet(resultSet);
+                subjectMarkMapper.makeUnique(subjects, subject);
                 user.getExams().add(subject);
             }
-            return new ArrayList<>(users.values());
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return new ArrayList<>(users.values());
     }
 
     @Override
-    public void chooseExams(int userId, int subjectId) {
+    public List<User> findExamsBySubject(int subjectId) {
+        Map<Integer, User> users = new HashMap<>();
+        Map<Integer, Subject> subjects = new HashMap<>();
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("CLIENT_SEARCH_BY_SUBJECT"))){
+            statement.setInt(1, subjectId);
+            ResultSet resultSet = statement.executeQuery();
+            UserMapper userMapper = new UserMapper();
+            SubjectMarkMapper subjectMarkMapper = new SubjectMarkMapper();
+            while(resultSet.next()) {
+                User user = userMapper.extractFromResultSet(resultSet);
+                user = userMapper.makeUnique(users, user);
+                Subject subject = subjectMarkMapper.extractFromResultSet(resultSet);
+                subjectMarkMapper.makeUnique(subjects, subject);
+                user.getExams().add(subject);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<>(users.values());
+    }
+
+    @Override
+    public void createExam(int userId, int subjectId) {
         try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("EXAM_INSERT"))) {
             statement.setInt(1, userId);
             statement.setInt(2, subjectId);
+            statement.setInt(3, 0);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void deleteExam(int userId, int subjectId) {
-        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("EXAM_DELETE"))) {
-            statement.setInt(1, userId);
-            statement.setInt(2, subjectId);
+    public void updateExam(int mark, int userId, int subjectId) {
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("EXAM_UPDATE_MARK"))) {
+            statement.setInt(1, mark);
+            statement.setInt(2, userId);
+            statement.setInt(3, subjectId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -137,17 +190,23 @@ public class JDBCUserFactory implements UserDao {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        Optional<User> user = Optional.empty();
+    public User findByEmail(String email) {
+        User user = new User();
         try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("USER_FIND_BY_EMAIL"))){
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             UserMapper userMapper = new UserMapper();
             if (resultSet.next()) {
-                user = Optional.of(userMapper.extractFromResultSet(resultSet));
+                user = userMapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return user;
     }

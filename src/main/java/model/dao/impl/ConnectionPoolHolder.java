@@ -22,8 +22,8 @@ public class ConnectionPoolHolder {
                         bds.setUrl(properties.getProperty("db.connection.url"));
                         bds.setUsername(properties.getProperty("db.connection.username"));
                         bds.setPassword(properties.getProperty("db.connection.password"));
-                        bds.setMinIdle(5);
-                        bds.setMaxIdle(10);
+                        bds.setMinIdle(10);
+                        bds.setMaxIdle(20);
                         bds.setMaxOpenPreparedStatements(100);
                         dataSource = bds;
                     } catch (IOException | ClassNotFoundException e) {

@@ -10,26 +10,24 @@
         </jsp:include><br>
         <table>
             <thead>
-                <tr>
-                    <th><fmt:message key="administrator.history_email"/></th>
-                    <th><fmt:message key="administrator.history_subject"/></th>
-                    <th><fmt:message key="administrator.history_mark"/></th>
-                </tr>
+            <tr>
+                <th><fmt:message key="administrator.history_email"/></th>
+                <th><fmt:message key="administrator.history_subject"/></th>
+                <th><fmt:message key="administrator.history_mark"/></th>
+            </tr>
             </thead>
             <tbody>
-                <c:if test="${not empty results}">
-                    <c:forEach items="${results}" var="result">
-                        <c:forEach items="${result.exams}" var="exam">
-                            <c:if test="${exam.mark != 0}">
-                                <tr>
-                                    <th><c:out value="${userEmail}"/></th>
-                                    <th><c:out value="${exam.enName}"/></th>
-                                    <th><c:out value="${exam.mark}"/></th>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
-                    </c:forEach>
-                </c:if>
+            <c:forEach items="${users}" var="user">
+                <c:forEach items="${user.exams}" var="exam">
+                    <tr>
+                        <c:if test="${exam.mark != 0}">
+                            <th><c:out value="${user.email}"/></th>
+                            <th><c:out value="${exam.enName}"/></th>
+                            <th><c:out value="${exam.mark}"/></th>
+                        </c:if>
+                    </tr>
+                </c:forEach>
+            </c:forEach>
             </tbody>
         </table>
     </body>
