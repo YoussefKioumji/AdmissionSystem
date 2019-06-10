@@ -4,6 +4,7 @@
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
+        <c:set var="localeCode" value="${pageContext.response.locale}"/>
         <fmt:message key="administrator.specialities_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
@@ -12,7 +13,14 @@
         <form action="${pageContext.request.contextPath}/app/admin/searchByFaculty" method="post">
             <select name="searchedFaculty">
                 <c:forEach items="${faculties}" var="faculty">
-                    <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
+                    <c:choose>
+                        <c:when test="${localeCode == 'uk'}">
+                            <option value="${faculty.id}" selected><c:out value="${faculty.uaName}"/></option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select>
             <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
@@ -31,14 +39,32 @@
             <c:forEach var="i" begin="0" end="2">
                 <select name="selectedSubjects">
                     <c:forEach items="${subjects}" var="subject">
-                        <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
+                        <c:forEach items="${subjects}" var="subject">
+                            <c:choose>
+                                <c:when test="${localeCode == 'uk'}">
+                                    <option value="${subject.id}" selected><c:out value="${subject.uaName}"/></option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                     </c:forEach>
                 </select>
             </c:forEach><br>
             <fmt:message key="administrator.add_speciality_faculty"/>
             <select name="selectedFaculty">
                 <c:forEach items="${faculties}" var="faculty">
-                    <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
+                    <c:forEach items="${faculties}" var="faculty">
+                        <c:choose>
+                            <c:when test="${localeCode == 'uk'}">
+                                <option value="${faculty.id}" selected><c:out value="${faculty.uaName}"/></option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </c:forEach>
             </select>
             <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
@@ -59,14 +85,28 @@
             <tbody>
             <c:forEach items="${specialities}" var="speciality">
                 <tr>
-                    <th><c:out value="${speciality.id}"/></th>
-                    <th><c:out value="${speciality.code}"/></th>
-                    <th><c:out value="${speciality.enName}"/></th>
-                    <th><c:out value="${speciality.faculty.enName}"/></th>
-                    <th><c:out value="${speciality.years}"/></th>
-                    <c:forEach items="${speciality.subjects}" var="subject">
-                        <th><c:out value="${subject.enName}"/></th>
-                    </c:forEach>
+                    <c:choose>
+                        <c:when test="${localeCode == 'uk'}">
+                            <th><c:out value="${speciality.id}"/></th>
+                            <th><c:out value="${speciality.code}"/></th>
+                            <th><c:out value="${speciality.uaName}"/></th>
+                            <th><c:out value="${speciality.faculty.uaName}"/></th>
+                            <th><c:out value="${speciality.years}"/></th>
+                            <c:forEach items="${speciality.subjects}" var="subject">
+                                <th><c:out value="${subject.uaName}"/></th>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <th><c:out value="${speciality.id}"/></th>
+                            <th><c:out value="${speciality.code}"/></th>
+                            <th><c:out value="${speciality.enName}"/></th>
+                            <th><c:out value="${speciality.faculty.enName}"/></th>
+                            <th><c:out value="${speciality.years}"/></th>
+                            <c:forEach items="${speciality.subjects}" var="subject">
+                                <th><c:out value="${subject.enName}"/></th>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
                 </tr>
             </c:forEach>
             </tbody>

@@ -193,6 +193,26 @@ public class JDBCSpecialityFactory implements SpecialityDao {
     }
 
     @Override
+    public List<Integer> findUsersWithSpeciality() {
+        List<Integer> usersWithSpeciality = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("SELECT_USERS_WITH_SPECIALITY"))) {
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                usersWithSpeciality.add(resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return usersWithSpeciality;
+    }
+
+    @Override
     public void createAdmission(int specialityId, int userId, int finalMark) {
         try(PreparedStatement statement = connection.prepareStatement(properties.getProperty("SPECIALITY_CREATE_ADMISSION"))) {
             statement.setInt(1, specialityId);

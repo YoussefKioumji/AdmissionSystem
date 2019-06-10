@@ -6,7 +6,9 @@ import model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class LoginCommand implements Command {
     private Map<Role, String> pages = new HashMap<>();
@@ -20,8 +22,16 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        Locale uklocale = new Locale("uk", "UA");
+        ResourceBundle ukResourceBundle = ResourceBundle.getBundle("outputs", uklocale);
+        ResourceBundle enResourceBundle = ResourceBundle.getBundle("outputs", Locale.getDefault());
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        if(!userService.validateNullLogin(email, password)) {
+            request.getSession().setAttribute("ukErrorMessage", ukResourceBundle.getString("login.null_error"));
+            request.getSession().setAttribute("enErrorMessage", enResourceBundle.getString("login.null_error"));
+            return "/WEB-INF/view/login.jsp";
+        }
         User user = userService.findByEmail(email);
         if (password.equals(user.getPassword())) {
             if (CommandUtility.checkUserIsLogged(request, user.getEmail(), user)) {

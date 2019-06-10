@@ -11,4 +11,5 @@ public interface SubjectDao extends GenericDao<Subject> {
     List<Subject> findExamSubject();
     List<Subject> findAllPagination(int startIndex, int recordPerPage);
     int numberOfRows();
+    List<Integer> findUsersWithExams();
 }

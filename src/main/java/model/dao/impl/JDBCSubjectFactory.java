@@ -198,6 +198,26 @@ public class JDBCSubjectFactory implements SubjectDao {
     }
 
     @Override
+    public List<Integer> findUsersWithExams() {
+        List<Integer> usersWithExams = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("SELECT_USERS_WITH_EXAMS"))) {
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                usersWithExams.add(resultSet.getInt(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return usersWithExams;
+    }
+
+    @Override
     public List<Subject> findExamSubject() {
         Map<Integer, Subject> subjects = new HashMap<>();
         try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("EXAM_SELECT_SUBJECT"))) {

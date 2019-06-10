@@ -9,7 +9,7 @@ public class ChangeLanguageCommand implements Command {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        if (request.getParameter("language").equals("en") || request.getParameter("language").equals("ua")) {
+        if (request.getParameter("language").equals("en") || request.getParameter("language").equals("uk")) {
             Config.set(session, Config.FMT_LOCALE, new java.util.Locale(request.getParameter("language")));
         }
         String referer = request.getHeader("Referer");

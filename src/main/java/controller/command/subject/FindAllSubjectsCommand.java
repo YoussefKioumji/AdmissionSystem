@@ -25,7 +25,6 @@ public class FindAllSubjectsCommand implements Command {
             numberOfPages = numberOfPages + 1;
         }
         List<Subject> subjects = subjectService.findAllPagination(startIndex, recordPerPage);
-        System.out.println(subjects);
         request.setAttribute("subjects", subjects);
         request.setAttribute("numberOfPages", numberOfPages);
         return "/WEB-INF/view/subjects.jsp";

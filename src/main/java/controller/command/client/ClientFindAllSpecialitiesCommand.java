@@ -3,6 +3,7 @@ package controller.command.client;
 import controller.command.Command;
 import model.entity.Faculty;
 import model.entity.Speciality;
+import model.entity.User;
 import model.service.FacultyService;
 import model.service.SpecialityService;
 
@@ -20,6 +21,13 @@ public class ClientFindAllSpecialitiesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        int userId = ((User)request.getSession().getAttribute("user")).getId();
+        List<Integer> usersWithSpeciality = specialityService.findUsersWithSpeciality();
+        for (Integer userWithSpeciality : usersWithSpeciality) {
+            if (userId == userWithSpeciality) {
+                request.setAttribute("choseSpeciality", "1");
+            }
+        }
         List<Speciality> specialities = specialityService.findAll();
         List<Faculty> faculties = facultyService.findAll();
         request.setAttribute("specialities", specialities);

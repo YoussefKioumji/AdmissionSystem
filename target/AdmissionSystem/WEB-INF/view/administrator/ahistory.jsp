@@ -4,6 +4,7 @@
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
+        <c:set var="localeCode" value="${pageContext.response.locale}"/>
         <fmt:message key="administrator.history_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
@@ -22,7 +23,14 @@
                     <tr>
                         <c:if test="${exam.mark != 0}">
                             <th><c:out value="${user.email}"/></th>
-                            <th><c:out value="${exam.enName}"/></th>
+                            <c:choose>
+                                <c:when test="${localeCode == 'uk'}">
+                                    <th><c:out value="${exam.uaName}"/></th>
+                                </c:when>
+                                <c:otherwise>
+                                    <th><c:out value="${exam.enName}"/></th>
+                                </c:otherwise>
+                            </c:choose>
                             <th><c:out value="${exam.mark}"/></th>
                         </c:if>
                     </tr>

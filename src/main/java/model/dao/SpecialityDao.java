@@ -15,4 +15,5 @@ public interface SpecialityDao extends GenericDao<Speciality>{
     List<Speciality> findAllPagination(int startIndex, int recordPerPage);
     int numberOfRows();
     void createWithSubjects(Speciality speciality, List<Integer> subjectIds);
+    List<Integer> findUsersWithSpeciality();
 }

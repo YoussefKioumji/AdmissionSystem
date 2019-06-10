@@ -4,6 +4,7 @@
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
+        <c:set var="localeCode" value="${pageContext.response.locale}"/>
         <fmt:message key="registration.title" var="pageTitle"/>
         <jsp:include page="header.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
@@ -27,8 +28,15 @@
             <input type="text" id="phone" name="phone"><br><br>
             <input type="submit" value=<fmt:message key="registration.button"/>>
         </form>
-        <c:if test="${not empty errorMessage}">
-            <c:out value="${errorMessage}"/>
+        <c:if test="${not empty enErrorMessage}">
+            <c:choose>
+                <c:when test="${localeCode == 'uk'}">
+                    <c:out value="${ukErrorMessage}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:out value="${enErrorMessage}"/>
+                </c:otherwise>
+            </c:choose>
         </c:if>
     </body>
 </html>

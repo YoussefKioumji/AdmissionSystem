@@ -49,6 +49,11 @@ public class SubjectService {
         dao.create(subject);
     }
 
+    public List<Integer> findUsersWithExams() {
+        SubjectDao dao = daoFactory.createSubjectDao();
+        return dao.findUsersWithExams();
+    }
+
 //    public Subject findById(int id) {
 //        SubjectDao dao = daoFactory.createSubjectDao();
 //        return dao.findById(id);

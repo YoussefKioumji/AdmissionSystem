@@ -17,6 +17,6 @@
         <a href="${pageContext.request.contextPath}/app/admin/applications"><fmt:message key="header.applications"/></a>
         <a href="${pageContext.request.contextPath}/app/logout"><fmt:message key="header.logout"/></a>
         <a href="${pageContext.request.contextPath}/app/changeLanguage?language=en"><fmt:message key="header.english"/></a>
-        <a href="${pageContext.request.contextPath}/app/changeLanguage?language=ua"><fmt:message key="header.ukrainian"/></a>
+        <a href="${pageContext.request.contextPath}/app/changeLanguage?language=uk"><fmt:message key="header.ukrainian"/></a>
     </body>
 </html>

@@ -14,7 +14,7 @@
             </form>
         </c:if>
         <c:if test="${not empty passed}">
-            <fmt:message key="message.stop_adminssion"/>
+            <fmt:message key="message.stop_admission"/>
         </c:if><br>
     </body>
 </html>

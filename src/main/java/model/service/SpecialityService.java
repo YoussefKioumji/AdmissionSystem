@@ -63,4 +63,9 @@ public class SpecialityService {
         SpecialityDao dao = daoFactory.createSpecialityDao();
         dao.createWithSubjects(speciality, subjectIds);
     }
+
+    public List<Integer> findUsersWithSpeciality() {
+        SpecialityDao dao = daoFactory.createSpecialityDao();
+        return dao.findUsersWithSpeciality();
+    }
 }

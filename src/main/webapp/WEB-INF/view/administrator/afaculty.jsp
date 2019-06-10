@@ -4,6 +4,7 @@
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
+        <c:set var="localeCode" value="${pageContext.response.locale}"/>
         <fmt:message key="administrator.faculties_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
@@ -21,7 +22,14 @@
                 <c:forEach items="${faculties}" var="faculty">
                     <tr>
                         <th><c:out value="${faculty.id}"/></th>
-                        <th><c:out value="${faculty.enName}"/></th>
+                        <c:choose>
+                            <c:when test="${localeCode == 'uk'}">
+                                <th><c:out value="${faculty.uaName}"/></th>
+                            </c:when>
+                            <c:otherwise>
+                                <th><c:out value="${faculty.enName}"/></th>
+                            </c:otherwise>
+                        </c:choose>
                         <th><c:out value="${faculty.email}"/></th>
                         <th><c:out value="${faculty.phone}"/></th>
                     </tr>

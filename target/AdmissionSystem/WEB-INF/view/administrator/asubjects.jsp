@@ -4,6 +4,7 @@
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
+        <c:set var="localeCode" value="${pageContext.response.locale}"/>
         <fmt:message key="administrator.subjects_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
@@ -35,7 +36,14 @@
             <c:forEach items="${subjects}" var="subject">
                 <tr>
                     <th><c:out value="${subject.id}"/></th>
-                    <th><c:out value="${subject.enName}"/></th>
+                    <c:choose>
+                        <c:when test="${localeCode == 'uk'}">
+                            <th><c:out value="${subject.uaName}"/></th>
+                        </c:when>
+                        <c:otherwise>
+                            <th><c:out value="${subject.enName}"/></th>
+                        </c:otherwise>
+                    </c:choose>
                     <th><c:out value="${subject.questions}"/></th>
                     <th><c:out value="${subject.maximum}"/></th>
                     <th><c:out value="${subject.minimum}"/></th>

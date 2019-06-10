@@ -5,14 +5,14 @@
     <body>
         <fmt:setBundle basename="outputs"/>
         <c:if test="${empty user}">
-        <fmt:message key="home.title" var="pageTitle"/>
-        <jsp:include page="header.jsp">
-            <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include>
+            <fmt:message key="home.title" var="pageTitle"/>
+            <jsp:include page="header.jsp">
+                <jsp:param name="title" value="${pageTitle}"/>
+            </jsp:include>
         </c:if>
         <c:if test="${not empty user}">
             <c:if test="${user.role == 'ADMINISTRATOR'}">
-            <jsp:include page="administrator/ahome.jsp"/>
+                <jsp:include page="administrator/ahome.jsp"/>
             </c:if>
             <c:if test="${user.role == 'CLIENT'}">
                 <jsp:include page="client/chome.jsp"/>
