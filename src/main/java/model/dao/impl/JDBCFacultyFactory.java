@@ -3,6 +3,7 @@ package model.dao.impl;
 import model.dao.FacultyDao;
 import model.dao.mapper.FacultyMapper;
 import model.entity.Faculty;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCFacultyFactory implements FacultyDao {
+    static final Logger logger = Logger.getLogger(JDBCFacultyFactory.class);
     private Connection connection;
     private Properties properties;
 
@@ -19,7 +21,7 @@ public class JDBCFacultyFactory implements FacultyDao {
         try {
             properties.load(new FileInputStream("D:\\Study\\Project\\AdmissionSystem\\src\\main\\resources\\sql.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCFacultyFactory: JDBCFacultyFactory", e);
         }
     }
 
@@ -38,12 +40,12 @@ public class JDBCFacultyFactory implements FacultyDao {
                 faculty = facultyMapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCFacultyFactory: findById", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCFacultyFactory: findById", e);
             }
         }
         return faculty;
@@ -60,12 +62,12 @@ public class JDBCFacultyFactory implements FacultyDao {
                 facultyMapper.makeUnique(faculties, faculty);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCFacultyFactory: findAll", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCFacultyFactory: findAll", e);
             }
         }
         return new ArrayList<>(faculties.values());
@@ -84,6 +86,7 @@ public class JDBCFacultyFactory implements FacultyDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("SQLException in JDBCFacultyFactory: close", e);
             throw new RuntimeException(e);
         }
     }

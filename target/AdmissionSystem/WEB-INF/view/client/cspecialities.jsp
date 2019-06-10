@@ -8,7 +8,7 @@
         <fmt:message key="client.specialities_title" var="pageTitle"/>
         <jsp:include page="cheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
+        </jsp:include><br><br>
         <c:if test="${empty passed}">
             <c:if test="${empty choseSpeciality}">
                 <c:if test="${not empty errorMessage}">
@@ -54,7 +54,7 @@
             </select>
             <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
         </form>
-        <table>
+        <table class="w3-table w3-bordered w3-striped">
             <thead>
                 <tr>
                     <th><fmt:message key="specialities.code"/></th>

@@ -54,8 +54,8 @@ public class SubjectService {
         return dao.findUsersWithExams();
     }
 
-//    public Subject findById(int id) {
-//        SubjectDao dao = daoFactory.createSubjectDao();
-//        return dao.findById(id);
-//    }
+    public Subject findById(int id) {
+        SubjectDao dao = daoFactory.createSubjectDao();
+        return dao.findById(id);
+    }
 }

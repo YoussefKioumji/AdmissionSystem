@@ -8,8 +8,8 @@
         <fmt:message key="registration.title" var="pageTitle"/>
         <jsp:include page="header.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include>
-        <form action="${pageContext.request.contextPath}/app/registration" method="post">
+        </jsp:include><br><br>
+        <form class="w3-center" action="${pageContext.request.contextPath}/app/registration" method="post">
             <label for="enFirstName"><fmt:message key="registration.en_first_name"/></label><br>
             <input type="text" id="enFirstName" name="enFirstName"><br><br>
             <label for="enLastName"><fmt:message key="registration.en_last_name"/></label><br>

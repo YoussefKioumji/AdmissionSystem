@@ -2,7 +2,9 @@ package model.dao.impl;
 
 import model.dao.SubjectDao;
 import model.dao.mapper.SubjectMapper;
+import model.dao.mapper.SubjectMarkMapper;
 import model.entity.Subject;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCSubjectFactory implements SubjectDao {
+    static final Logger logger = Logger.getLogger(JDBCSubjectFactory.class);
     private Connection connection;
     private Properties properties;
 
@@ -33,32 +36,31 @@ public class JDBCSubjectFactory implements SubjectDao {
             statement.setInt(5, subject.getMinimum());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: create", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: create", e);
             }
         }
     }
 
     @Override
     public Subject findById(int id) {
-//        Subject subject = new Subject();
-//        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("SUBJECT_FIND_BY_ID"))) {
-//            statement.setInt(1, id);
-//            ResultSet resultSet = statement.executeQuery();
-//            SubjectMarkMapper subjectMarkMapper = new SubjectMarkMapper();
-//            while(resultSet.next()) {
-//                subject = subjectMarkMapper.extractFromResultSet(resultSet);
-//            }
-//            return subject;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-        return null;
+        Subject subject = new Subject();
+        try (PreparedStatement statement = connection.prepareStatement(properties.getProperty("SUBJECT_FIND_BY_ID"))) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            SubjectMapper subjectMapper = new SubjectMapper();
+            while(resultSet.next()) {
+                subject = subjectMapper.extractFromResultSet(resultSet);
+            }
+            return subject;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -72,12 +74,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 subjectMapper.makeUnique(subjects, subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: findAll", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: findAll", e);
             }
         }
         return new ArrayList<>(subjects.values());
@@ -96,12 +98,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 subjectMapper.makeUnique(subjects, subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: findAllPagination", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: findAllPagination", e);
             }
         }
         return new ArrayList<>(subjects.values());
@@ -116,12 +118,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 totalNumberOfRecords = resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: numberOfRows", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: numberOfRows", e);
             }
         }
         return totalNumberOfRecords;
@@ -139,12 +141,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 subjectMapper.makeUnique(subjects, subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: getUserSubjects", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: getUserSubjects", e);
             }
         }
         return new ArrayList<>(subjects.values());
@@ -162,12 +164,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 subjectMapper.makeUnique(subjects, subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: getSpecialitySubjects", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: getSpecialitySubjects", e);
             }
         }
         return new ArrayList<>(subjects.values());
@@ -184,14 +186,13 @@ public class JDBCSubjectFactory implements SubjectDao {
                 marks[i] = resultSet.getInt("mark");
                 i++;
             }
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: findMarks", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: findMarks", e);
             }
         }
         return marks;
@@ -206,12 +207,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 usersWithExams.add(resultSet.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: findUsersWithExams", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: findUsersWithExams", e);
             }
         }
         return usersWithExams;
@@ -228,12 +229,12 @@ public class JDBCSubjectFactory implements SubjectDao {
                 subjectMapper.makeUnique(subjects, subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: findExamSubject", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("IOException in JDBCSpecialityFactory: findExamSubject", e);
             }
         }
         return new ArrayList<>(subjects.values());
@@ -252,6 +253,7 @@ public class JDBCSubjectFactory implements SubjectDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("IOException in JDBCSpecialityFactory: close", e);
             throw new RuntimeException(e);
         }
     }

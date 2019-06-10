@@ -8,7 +8,7 @@
         <fmt:message key="client.subject_title" var="pageTitle"/>
         <jsp:include page="cheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
+        </jsp:include><br><br>
         <c:if test="${empty passed}">
             <c:if test="${empty choseExams}">
                 <fmt:message key="client.choose_subjects"/>
@@ -38,7 +38,7 @@
         <c:if test="${not empty passed}">
             <fmt:message key="message.stop_admission"/>
         </c:if>
-        <table>
+        <table class="w3-table w3-bordered w3-striped">
             <thead>
                 <tr>
                     <th><fmt:message key="subject.name"/></th>

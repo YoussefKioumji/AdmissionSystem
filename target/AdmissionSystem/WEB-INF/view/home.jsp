@@ -9,6 +9,7 @@
             <jsp:include page="header.jsp">
                 <jsp:param name="title" value="${pageTitle}"/>
             </jsp:include>
+            <img src="${pageContext.request.contextPath}/pictures/home.jpg" width="1400" height="620">
         </c:if>
         <c:if test="${not empty user}">
             <c:if test="${user.role == 'ADMINISTRATOR'}">

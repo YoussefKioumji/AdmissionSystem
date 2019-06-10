@@ -8,8 +8,8 @@
         <fmt:message key="administrator.faculties_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include>
-        <table>
+        </jsp:include><br><br>
+        <table class="w3-table w3-bordered w3-striped">
             <thead>
                 <tr>
                     <th><fmt:message key="faculty.id"/></th>

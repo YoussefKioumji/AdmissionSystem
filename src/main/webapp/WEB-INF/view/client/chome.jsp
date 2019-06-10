@@ -4,10 +4,11 @@
 <html>
     <body>
         <fmt:setBundle basename="outputs"/>
+        <c:set var="localeCode" value="${pageContext.response.locale}"/>
         <fmt:message key="client.home_title" var="pageTitle"/>
         <jsp:include page="cheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
+        </jsp:include><br><br>
         <form action="${pageContext.request.contextPath}/app/client/showMarks" method="post">
             <input type="submit" value="<fmt:message key="client.marks"/>"/>
         </form>
@@ -25,7 +26,14 @@
                             <c:forEach items="${result.exams}" var="exam">
                                 <tr>
                                     <c:if test="${exam.mark != 0}">
-                                        <th><c:out value="${exam.enName}"/></th>
+                                        <c:choose>
+                                            <c:when test="${localeCode == 'uk'}">
+                                                <th><c:out value="${exam.uaName}"/></th>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <th><c:out value="${exam.enName}"/></th>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <th><c:out value="${exam.mark}"/></th>
                                     </c:if>
                                 </tr>

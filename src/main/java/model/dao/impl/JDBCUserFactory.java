@@ -5,6 +5,7 @@ import model.dao.mapper.SubjectMarkMapper;
 import model.dao.mapper.UserMapper;
 import model.entity.Subject;
 import model.entity.User;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCUserFactory implements UserDao {
+    static final Logger logger = Logger.getLogger(JDBCUserFactory.class);
     private Connection connection;
     private Properties properties;
 
@@ -39,12 +41,12 @@ public class JDBCUserFactory implements UserDao {
             statement.setString(9, user.getPhone());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: create", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: create", e);
             }
         }
     }
@@ -106,12 +108,12 @@ public class JDBCUserFactory implements UserDao {
                 user.getExams().add(subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findAllExams", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findAllExams", e);
             }
         }
         return new ArrayList<>(users.values());
@@ -134,12 +136,12 @@ public class JDBCUserFactory implements UserDao {
                 user.getExams().add(subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findExamsBySubject", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findExamsBySubject", e);
             }
         }
         return new ArrayList<>(users.values());
@@ -153,12 +155,12 @@ public class JDBCUserFactory implements UserDao {
             statement.setInt(3, 0);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: createExam", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: createExam", e);
             }
         }
     }
@@ -171,12 +173,12 @@ public class JDBCUserFactory implements UserDao {
             statement.setInt(3, subjectId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: updateExam", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: updateExam", e);
             }
         }
     }
@@ -200,12 +202,12 @@ public class JDBCUserFactory implements UserDao {
                 user = userMapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findByEmail", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findByEmail", e);
             }
         }
         return user;
@@ -216,6 +218,7 @@ public class JDBCUserFactory implements UserDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("SQLException in JDBCSpecialityFactory: close", e);
             throw new RuntimeException(e);
         }
     }

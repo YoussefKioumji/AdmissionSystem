@@ -1,13 +1,16 @@
 package model.dao.impl;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
 public class ConnectionPoolHolder {
+    static final Logger logger = Logger.getLogger(ConnectionPoolHolder.class);
     private static volatile DataSource dataSource;
 
     public static DataSource getDataSource() {
@@ -26,8 +29,12 @@ public class ConnectionPoolHolder {
                         bds.setMaxIdle(20);
                         bds.setMaxOpenPreparedStatements(100);
                         dataSource = bds;
-                    } catch (IOException | ClassNotFoundException e) {
-                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
+                        logger.error("FileNotFoundException in ConnectionPoolHolder: getDataSource", e);
+                    } catch (IOException e) {
+                        logger.error("IOException in ConnectionPoolHolder: getDataSource", e);
+                    } catch (ClassNotFoundException e) {
+                        logger.error("ClassNotFoundException in ConnectionPoolHolder: getDataSource", e);
                     }
                 }
             }

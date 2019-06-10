@@ -8,7 +8,7 @@
         <fmt:message key="administrator.applications_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
+        </jsp:include><br><br>
         <form action="${pageContext.request.contextPath}/app/admin/selectSApplication" method="post">
             <select name="selectedApplication">
                 <c:forEach items="${specialities}" var="speciality">
@@ -25,7 +25,7 @@
             <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
         </form>
         <c:if test="${not empty applications}">
-            <table>
+            <table class="w3-table w3-bordered w3-striped">
                 <thead>
                 <tr>
                     <th><fmt:message key="administrator.application_speciality"/></th>

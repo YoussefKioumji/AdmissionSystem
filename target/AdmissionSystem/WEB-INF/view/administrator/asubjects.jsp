@@ -8,21 +8,23 @@
         <fmt:message key="administrator.subjects_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
-        <fmt:message key="administrator.add_subject"/>
-        <form action="${pageContext.request.contextPath}/app/admin/addSubject" method="post">
-            <label for="enNameSubject"><fmt:message key="administrator.add_subject_english"/></label><br>
-            <input type="text" id="enNameSubject" name="enNameSubject"><br>
-            <label for="uaNameSubject"><fmt:message key="administrator.add_subject_ukrainian"/></label><br>
-            <input type="text" id="uaNameSubject" name="uaNameSubject"><br>
-            <label for="questionsSubject"><fmt:message key="administrator.add_subject_questions"/></label><br>
-            <input type="number" min="0" id="questionsSubject" name="questionsSubject"><br>
-            <input type="submit" value="<fmt:message key="submit.button"/>"/>
-        </form>
+        </jsp:include><br><br>
+        <div class="w3-card">
+            <fmt:message key="administrator.add_subject"/>
+            <form action="${pageContext.request.contextPath}/app/admin/addSubject" method="post">
+                <label for="enNameSubject"><fmt:message key="administrator.add_subject_english"/></label><br>
+                <input type="text" id="enNameSubject" name="enNameSubject"><br>
+                <label for="uaNameSubject"><fmt:message key="administrator.add_subject_ukrainian"/></label><br>
+                <input type="text" id="uaNameSubject" name="uaNameSubject"><br>
+                <label for="questionsSubject"><fmt:message key="administrator.add_subject_questions"/></label><br>
+                <input type="number" min="0" id="questionsSubject" name="questionsSubject"><br>
+                <input type="submit" value="<fmt:message key="submit.button"/>"/>
+            </form>
+        </div>
         <c:if test="${not empty successMessage}">
             <c:out value="${successMessage}"/>
         </c:if><br><br>
-        <table>
+        <table class="w3-table w3-bordered w3-striped">
             <thead>
             <tr>
                 <th><fmt:message key="subject.id"/></th>

@@ -1,18 +1,21 @@
 package model.dao.impl;
 
 import model.dao.*;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
+    static final Logger logger = Logger.getLogger(JDBCDaoFactory.class);
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     private Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
+            logger.error("SQLException in JDBCDaoFactory: getConnection", e);
             throw new RuntimeException();
         }
     }

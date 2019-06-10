@@ -8,53 +8,11 @@
         <fmt:message key="administrator.specialities_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
-        <fmt:message key="specialities.search_by_faculty"/>
-        <form action="${pageContext.request.contextPath}/app/admin/searchByFaculty" method="post">
-            <select name="searchedFaculty">
-                <c:forEach items="${faculties}" var="faculty">
-                    <c:choose>
-                        <c:when test="${localeCode == 'uk'}">
-                            <option value="${faculty.id}" selected><c:out value="${faculty.uaName}"/></option>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </select>
-            <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
-        </form>
-        <fmt:message key="administrator.add_speciality"/>
-        <form action="${pageContext.request.contextPath}/app/admin/addSpeciality" method="post">
-            <label for="enNameSpeciality"><fmt:message key="administrator.add_speciality_english"/></label><br>
-            <input type="text" id="enNameSpeciality" name="enNameSpeciality"><br>
-            <label for="uaNameSpeciality"><fmt:message key="administrator.add_speciality_ukrainian"/></label><br>
-            <input type="text" id="uaNameSpeciality" name="uaNameSpeciality"><br>
-            <label for="years"><fmt:message key="administrator.add_speciality_years"/></label><br>
-            <input type="number" min="0" id="years" name="years"><br>
-            <label for="code"><fmt:message key="administrator.add_speciality_code"/></label><br>
-            <input type="number" min="0" id="code" name="code"><br>
-            <fmt:message key="administrator.add_speciality_exams"/>
-            <c:forEach var="i" begin="0" end="2">
-                <select name="selectedSubjects">
-                    <c:forEach items="${subjects}" var="subject">
-                        <c:forEach items="${subjects}" var="subject">
-                            <c:choose>
-                                <c:when test="${localeCode == 'uk'}">
-                                    <option value="${subject.id}" selected><c:out value="${subject.uaName}"/></option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </c:forEach>
-                </select>
-            </c:forEach><br>
-            <fmt:message key="administrator.add_speciality_faculty"/>
-            <select name="selectedFaculty">
-                <c:forEach items="${faculties}" var="faculty">
+        </jsp:include><br><br>
+        <div class="w3-card">
+            <fmt:message key="specialities.search_by_faculty"/>
+            <form action="${pageContext.request.contextPath}/app/admin/searchByFaculty" method="post">
+                <select name="searchedFaculty">
                     <c:forEach items="${faculties}" var="faculty">
                         <c:choose>
                             <c:when test="${localeCode == 'uk'}">
@@ -65,11 +23,57 @@
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
-                </c:forEach>
-            </select>
-            <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
-        </form>
-        <table>
+                </select>
+                <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
+            </form>
+        </div>
+        <div class="w3-card">
+            <fmt:message key="administrator.add_speciality"/>
+            <form action="${pageContext.request.contextPath}/app/admin/addSpeciality" method="post">
+                <label for="enNameSpeciality"><fmt:message key="administrator.add_speciality_english"/></label><br>
+                <input type="text" id="enNameSpeciality" name="enNameSpeciality"><br>
+                <label for="uaNameSpeciality"><fmt:message key="administrator.add_speciality_ukrainian"/></label><br>
+                <input type="text" id="uaNameSpeciality" name="uaNameSpeciality"><br>
+                <label for="years"><fmt:message key="administrator.add_speciality_years"/></label><br>
+                <input type="number" min="0" id="years" name="years"><br>
+                <label for="code"><fmt:message key="administrator.add_speciality_code"/></label><br>
+                <input type="number" min="0" id="code" name="code"><br>
+                <fmt:message key="administrator.add_speciality_exams"/>
+                <c:forEach var="i" begin="0" end="2">
+                    <select name="selectedSubjects">
+                        <c:forEach items="${subjects}" var="subject">
+                            <c:forEach items="${subjects}" var="subject">
+                                <c:choose>
+                                    <c:when test="${localeCode == 'uk'}">
+                                        <option value="${subject.id}" selected><c:out value="${subject.uaName}"/></option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${subject.id}" selected><c:out value="${subject.enName}"/></option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </c:forEach>
+                    </select>
+                </c:forEach><br>
+                <fmt:message key="administrator.add_speciality_faculty"/>
+                <select name="selectedFaculty">
+                    <c:forEach items="${faculties}" var="faculty">
+                        <c:forEach items="${faculties}" var="faculty">
+                            <c:choose>
+                                <c:when test="${localeCode == 'uk'}">
+                                    <option value="${faculty.id}" selected><c:out value="${faculty.uaName}"/></option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${faculty.id}" selected><c:out value="${faculty.enName}"/></option>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </c:forEach>
+                </select>
+                <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
+            </form>
+        </div>
+        <table class="w3-table w3-bordered w3-striped">
             <thead>
             <tr>
                 <th><fmt:message key="specialities.id"/></th>

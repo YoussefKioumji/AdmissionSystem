@@ -9,6 +9,7 @@ import model.entity.Faculty;
 import model.entity.Speciality;
 import model.entity.Subject;
 import model.entity.User;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.sql.*;
 import java.util.*;
 
 public class JDBCSpecialityFactory implements SpecialityDao {
+    static final Logger logger = Logger.getLogger(JDBCSpecialityFactory.class);
     private Connection connection;
     private Properties properties;
 
@@ -25,7 +27,7 @@ public class JDBCSpecialityFactory implements SpecialityDao {
         try {
             properties.load(new FileInputStream("D:\\Study\\Project\\AdmissionSystem\\src\\main\\resources\\sql.properties"));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException in JDBCSpecialityFactory: JDBCSpecialityFactory", e);
         }
     }
 
@@ -59,12 +61,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: createWithSubjects", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: createWithSubjects", e);
             }
         }
     }
@@ -96,12 +98,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 speciality.getSubjects().add(subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findByFaculty", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findByFaculty", e);
             }
         }
         return new ArrayList<>(specialities.values());
@@ -128,12 +130,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 speciality.getSubjects().add(subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findAll", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findAll", e);
             }
         }
         return new ArrayList<>(specialities.values());
@@ -161,12 +163,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 speciality.getSubjects().add(subject);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findAllPagination", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findAllPagination", e);
             }
         }
         return new ArrayList<>(specialities.values());
@@ -181,12 +183,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 totalNumberOfRecords = resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: numberOfRows", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: numberOfRows", e);
             }
         }
         return totalNumberOfRecords;
@@ -201,12 +203,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 usersWithSpeciality.add(resultSet.getInt(1));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findUsersWithSpeciality", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findUsersWithSpeciality", e);
             }
         }
         return usersWithSpeciality;
@@ -220,12 +222,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
             statement.setInt(3, finalMark);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: createAdmission", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: createAdmission", e);
             }
         }
     }
@@ -247,12 +249,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 speciality.getUsers().add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findApplications", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findApplications", e);
             }
         }
         return new ArrayList<>(specialities.values());
@@ -268,12 +270,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 passed.add(resultSet.getString("user.email"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findPassed", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findPassed", e);
             }
         }
         return passed;
@@ -290,12 +292,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 notPassed.add(resultSet.getString("user.email"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: findNotPassed", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: findNotPassed", e);
             }
         }
         return notPassed;
@@ -311,12 +313,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 finalMarks.add(resultSet.getInt("final_mark"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: getFinalMarks", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: getFinalMarks", e);
             }
         }
         return finalMarks;
@@ -331,12 +333,12 @@ public class JDBCSpecialityFactory implements SpecialityDao {
                 specialityIds.add(resultSet.getInt("speciality_id"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQLException in JDBCSpecialityFactory: getDistinctSpecialityId", e);
         } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error("SQLException in JDBCSpecialityFactory: getDistinctSpecialityId", e);
             }
         }
         return specialityIds;
@@ -355,6 +357,7 @@ public class JDBCSpecialityFactory implements SpecialityDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("SQLException in JDBCSpecialityFactory: close", e);
             throw new RuntimeException(e);
         }
     }

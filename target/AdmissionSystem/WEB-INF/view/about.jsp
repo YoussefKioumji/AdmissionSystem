@@ -9,6 +9,12 @@
             <jsp:param name="title" value="${pageTitle}"/>
         </jsp:include>
         <br>
-        <fmt:message key="about.information"/>
+        <div class="w3-row-padding w3-margin-top">
+            <div class="w3-card">
+                <div class="centered">
+                    <fmt:message key="about.information"/>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

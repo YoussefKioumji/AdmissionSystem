@@ -8,7 +8,7 @@
         <fmt:message key="administrator.exam_title" var="pageTitle"/>
         <jsp:include page="aheader.jsp">
             <jsp:param name="title" value="${pageTitle}"/>
-        </jsp:include><br>
+        </jsp:include><br><br>
         <fmt:message key="administrator.exam_search_by_subject"/>
         <form action="${pageContext.request.contextPath}/app/admin/searchBySubject" method="post">
             <select name="searchedSubject">
@@ -25,7 +25,7 @@
             </select>
             <br><input type="submit" value="<fmt:message key="submit.button"/>"/>
         </form>
-        <table>
+        <table class="w3-table w3-bordered w3-striped">
             <thead>
                 <tr>
                     <th><fmt:message key="administrator.exam_email"/></th>
